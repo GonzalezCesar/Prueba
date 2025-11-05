@@ -165,17 +165,9 @@ Archivo guardado: problema4_resultado.txt
 
 ---
 
-## 🧾 Créditos
-
 **Autor:** *Cesar Alejandro Abache González*  
 **Materia:** Lenguajes y Compiladores  
 **Profesor:** Msc. Félix Márquez  
 **Año:** 2025-II  
-
----
-
-## 🧩 Licencia
-Proyecto académico libre de uso educativo.  
-Puedes modificar o reutilizar los scripts citando la fuente.
 
 ---
