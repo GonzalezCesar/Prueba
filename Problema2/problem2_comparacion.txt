@@ -1,0 +1,11 @@
+=== RESULTADOS EN PYTHON ===
+n = 100, x = 2
+Resultado f(x) = 515377520732011331036461129765621272702107522001
+Tiempo generación coeficientes: 0.285 ms
+Tiempo evaluación polinomio: 0.123 ms
+
+=== RESULTADOS EN C ===
+n = 100, x = 2.00
+Resultado f(x) = 515377520732011161935319439655255049274449199104
+Tiempo generación coeficientes: 0.034 ms
+Tiempo evaluación polinomio: 0.015 ms
