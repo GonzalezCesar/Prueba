@@ -3,19 +3,17 @@ import time
 from math import comb
 from pathlib import Path
 
-# ---------- Funciones Python ----------
 def pascal_coeffs(n):
     return [comb(n, k) for k in range(n + 1)]
 
 def evaluar_polinomio(coeffs, x):
     return sum(c * (x ** i) for i, c in enumerate(coeffs))
 
-# ---------- Ejecución principal ----------
 def ejecutar_prueba_dos(n=100, x=2):
-    carpeta = Path(__file__).parent  # siempre dentro de la carpeta del script
+    carpeta = Path(__file__).parent  
     salida = []
 
-    # ---- Ejecución en PYTHON ----
+    # Ejecución en Python
     t0 = time.perf_counter()
     coeffs = pascal_coeffs(n)
     t1 = time.perf_counter()
@@ -32,7 +30,7 @@ def ejecutar_prueba_dos(n=100, x=2):
     salida.append(f"Tiempo generación coeficientes: {gen_py:.3f} ms\n")
     salida.append(f"Tiempo evaluación polinomio: {eval_py:.3f} ms\n\n")
 
-    # ---- Crear código en C dentro de la misma carpeta ----
+    # Crear código en C 
     codigo_c = f"""
     #include <stdio.h>
     #include <time.h>
@@ -78,14 +76,12 @@ def ejecutar_prueba_dos(n=100, x=2):
     archivo_c = carpeta / "problema2.c"
     archivo_c.write_text(codigo_c, encoding="utf-8")
 
-    # ---- Compilar y ejecutar el código C dentro de la carpeta ----
     ejecutable = carpeta / "problema2_exec"
     subprocess.run(["gcc", str(archivo_c), "-lm", "-o", str(ejecutable)], check=True)
     resultado_c = subprocess.run([str(ejecutable)], capture_output=True, text=True)
 
     salida.append(resultado_c.stdout)
 
-    # ---- Guardar todo en un único archivo dentro de la carpeta ----
     archivo_salida = carpeta / "problem2_comparacion.txt"
     archivo_salida.write_text("".join(salida), encoding="utf-8")
 
@@ -96,7 +92,5 @@ def ejecutar_prueba_dos(n=100, x=2):
     print("\nResumen:\n")
     print("".join(salida))
 
-
-# --- Ejecutar ---
 if __name__ == "__main__":
     ejecutar_prueba_dos(100, 2)

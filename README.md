@@ -6,6 +6,8 @@
 **Periodo:** 2025-II  
 
 ---
+## Link del video: 
+https://youtu.be/M3EkcB_cRCI
 
 ## 📘 Descripción General
 
@@ -20,24 +22,19 @@ Se incluyen scripts funcionales, salidas de ejemplo y medición de tiempos cuand
 ```
 .
 ├── Problema1/
-│   ├── problema1.py
-│   ├── ejemplo.txt
-│   └── salida.txt
+│   └── problema1.py
 │
 ├── Problema2/
 │   ├── problema2.py
-│   ├── problem2_output_n100.txt
-│   └── README.md
+│   ├── problem2_comparacion.txt
+|   ├── problema2.c
+|   └── problema2_exec
 │
 ├── Problema3/
-│   ├── problema3.py
-│   ├── problema3_resultado.txt
-│   └── ejemplos.txt
+│   └── problema3.py
 │
 ├── Problema4/
-│   ├── problema4.py
-│   ├── problema4_resultado.txt
-│   └── ejemplo_codigo.c
+│   └── problema4.py
 │
 └── README.md   ← (este archivo)
 ```
@@ -51,11 +48,12 @@ Cada script puede ejecutarse directamente desde terminal o entorno Python 3.
 ### 🔹 Requisitos previos
 
 - Python **3.9 o superior**
-- Librerías estándar (`re`, `math`, `time`, `pathlib`, `PyPDF2` solo si se analiza el PDF original)
+- Librerías estándar (`re`, `math`, `time`, `pathlib`)
 
 Instalación recomendada:
 ```bash
-sudo apt install python3
+sudo apt install python3 (para linux)
+Instalar desde su pagina oficial: https://www.python.org/
 ```
 
 ---

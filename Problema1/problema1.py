@@ -1,39 +1,59 @@
 import re
 
-def validar_fen(cadena):
+def validar_fila_fen(row_str: str) -> bool:
+    """Valida que una sola fila de FEN sume 8."""
+    count = 0
+    for char in row_str:
+        if char.isdigit():
+            count += int(char)
+        elif char.isalpha():
+            count += 1
+        else:
+            return False 
+    return count == 8
+
+def validar_fen(fen_str: str) -> bool:
     """
-    Valida si una cadena está en notación Forsyth–Edwards (FEN).
-    Devuelve True si es válida, False si no lo es.
+    Valida una cadena FEN completa, tanto sintáctica como semánticamente
+    (en términos de conteo de filas).
     """
-    # Expresión regular basada en el formato FEN estándar
-    patron = re.compile(
-        r"^"
-        r"([prnbqkPRNBQK1-8]{1,8}/){7}"  # 8 filas del tablero (7 con '/')
-        r"[prnbqkPRNBQK1-8]{1,8}"        # última fila sin '/'
-        r"\s"                            # espacio
-        r"[wb]"                           # turno: 'w' o 'b'
-        r"\s"
-        r"(-|[KQkq]{1,4})"                # enroques posibles
-        r"\s"
-        r"(-|[a-h][36])"                  # captura al paso
-        r"\s"
-        r"\d+"                            # medio movimiento
-        r"\s"
-        r"\d+"                            # número de movimiento
-        r"$"
+    fen_regex = re.compile(
+        r"^\s*([rnbqkpRNBQKP1-8]{1,8}\/){7}[rnbqkpRNBQKP1-8]{1,8}\s"  
+        r"[wb]\s"                                                    
+        r"(K?Q?k?q?|-)\s"                                            
+        r"(-|[a-h][36])\s"                                           
+        r"\d+\s"                                                     
+        r"\d+\s*$"                                                   
     )
+    
+    if not fen_regex.match(fen_str):
+        print(f"Error: La estructura FEN general es inválida.")
+        return False
+    
+    try:
+        campos = fen_str.strip().split()
+        filas_str = campos[0]
+        filas = filas_str.split('/')
+        
+        if len(filas) != 8:
+            print("Error: El campo de piezas no tiene 8 filas.")
+            return False
+            
+        for i, fila in enumerate(filas):
+            if not validar_fila_fen(fila):
+                print(f"Error: La fila {i+1} ('{fila}') no suma 8 escaques.")
+                return False
+                
+    except Exception as e:
+        print(f"Error inesperado durante la validación de filas: {e}")
+        return False
+        
+    return True
 
-    return bool(patron.match(cadena.strip()))
+fen_inicio = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+fen_invalida_fila = "rnbqkbnr/pppppppp/8/8/4/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1" 
+fen_invalida_estructura = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w ZZZ - 0 1" 
 
-# --- Ejemplo de uso ---
-if __name__ == "__main__":
-    ejemplos = [
-        "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",  # válida
-        "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 0 1",    # válida
-        "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQ - 10 20", # válida
-        "rnbqkbnr/pppppppp/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",   # inválida (solo 7 filas)
-        "hola mundo"                                                # inválida
-    ]
-
-    for e in ejemplos:
-        print(f"'{e}' → {'VÁLIDA' if validar_fen(e) else 'INVÁLIDA'}")
+print(f"'{fen_inicio}': {validar_fen(fen_inicio)}")
+print(f"'{fen_invalida_fila}': {validar_fen(fen_invalida_fila)}")
+print(f"'{fen_invalida_estructura}': {validar_fen(fen_invalida_estructura)}")
